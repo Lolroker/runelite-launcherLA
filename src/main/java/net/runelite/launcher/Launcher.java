@@ -564,7 +564,7 @@ public class Launcher
 		if (launcherTooOld)
 		{
 			SwingUtilities.invokeLater(() ->
-				new FatalErrorDialog("Your launcher is too old to start " + SERVER_NAME + ". Please download and install a more " +
+				new FatalErrorDialog("Your luna launcher is too old to start " + SERVER_NAME + ". Please download and install a more " +
 					"recent one from " + SERVER_WEBSITE_SHORT)
 					.addButton(SERVER_WEBSITE_SHORT, () -> LinkBrowser.browse(LauncherProperties.getDownloadLink()))
 					.open());
