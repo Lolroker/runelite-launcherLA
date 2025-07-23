@@ -2,11 +2,11 @@
 
 set -e
 
-APPBASE="build/macos-aarch64/Jirenyte.app"
+APPBASE="build/macos-aarch64/Luna.app"
 
 build() {
     echo Launcher sha256sum
-    shasum -a 256 build/libs/Jirenyte.jar
+    shasum -a 256 build/libs/Luna.jar
 
     pushd native
     cmake -DCMAKE_OSX_ARCHITECTURES=arm64 -B build-aarch64 .
@@ -26,8 +26,8 @@ build() {
 
     mkdir -p $APPBASE/Contents/{MacOS,Resources}
 
-    cp native/build-aarch64/src/Jirenyte $APPBASE/Contents/MacOS/
-    cp build/libs/Jirenyte.jar $APPBASE/Contents/Resources/
+    cp native/build-aarch64/src/Luna $APPBASE/Contents/MacOS/
+    cp build/libs/Luna.jar $APPBASE/Contents/Resources/
     cp packr/macos-aarch64-config.json $APPBASE/Contents/Resources/config.json
     cp build/filtered-resources/Info.plist $APPBASE/Contents/
     cp osx/runelite.icns $APPBASE/Contents/Resources/icons.icns
@@ -36,12 +36,12 @@ build() {
     mkdir $APPBASE/Contents/Resources/jre
     mv jdk-$MAC_AARCH64_VERSION-jre/Contents/Home/* $APPBASE/Contents/Resources/jre
 
-    echo Setting world execute permissions on Jirenyte
+    echo Setting world execute permissions on Luna
     pushd $APPBASE
-    chmod g+x,o+x Contents/MacOS/Jirenyte
+    chmod g+x,o+x Contents/MacOS/Luna
     popd
 
-    otool -l $APPBASE/Contents/MacOS/Jirenyte
+    otool -l $APPBASE/Contents/MacOS/Luna
 }
 
 dmg() {
@@ -50,24 +50,24 @@ dmg() {
 
     # create-dmg exits with an error code due to no code signing, but is still okay
     create-dmg $APPBASE . || true
-    mv Jirenyte\ *.dmg Jirenyte-aarch64.dmg
+    mv Luna\ *.dmg Luna-aarch64.dmg
 
     # dump for CI
-    hdiutil imageinfo Jirenyte-aarch64.dmg
+    hdiutil imageinfo Luna-aarch64.dmg
 
-    if ! hdiutil imageinfo Jirenyte-aarch64.dmg | grep -q "Format: ULFO" ; then
+    if ! hdiutil imageinfo Luna-aarch64.dmg | grep -q "Format: ULFO" ; then
         echo Format of dmg is not ULFO
         exit 1
     fi
 
-    if ! hdiutil imageinfo Jirenyte-aarch64.dmg | grep -q "Apple_HFS" ; then
+    if ! hdiutil imageinfo Luna-aarch64.dmg | grep -q "Apple_HFS" ; then
         echo Filesystem of dmg is not Apple_HFS
         exit 1
     fi
 
     # Notarize app
-    if xcrun notarytool submit Jirenyte-aarch64.dmg --wait --keychain-profile "AC_PASSWORD" ; then
-        xcrun stapler staple Jirenyte-aarch64.dmg
+    if xcrun notarytool submit Luna-aarch64.dmg --wait --keychain-profile "AC_PASSWORD" ; then
+        xcrun stapler staple Luna-aarch64.dmg
     fi
 }
 
