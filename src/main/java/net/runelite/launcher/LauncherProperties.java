@@ -40,8 +40,8 @@ public class LauncherProperties
 	private static final String DOWNLOAD_LINK = "runelite.download.link";
 	private static final String BOOTSTRAP = "runelite.bootstrap";
 	private static final String MAIN = "runelite.main";
-	private static final String RUNELITE_128 = "runelite.128";
-	private static final String RUNELITE_SPLASH = "runelite.splash";
+	private static final String RUNELITE_128 = "rrunelite.128";
+	private static final String RUNELITE_SPLASH = "rrunelite.splash";
 
 	private static final Properties properties = new Properties();
 
