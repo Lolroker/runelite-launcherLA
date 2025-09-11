@@ -45,7 +45,7 @@ build() {
 }
 
 dmg() {
-    SIGNING_IDENTITY="Developer ID Application"
+SIGNING_IDENTITY="Developer ID Application: Arthur Wagterveld (9465G4SH99)"
     codesign -f -s "${SIGNING_IDENTITY}" --entitlements osx/signing.entitlements --options runtime $APPBASE || true
 
     # create-dmg exits with an error code due to no code signing, but is still okay
